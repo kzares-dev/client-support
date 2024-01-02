@@ -25,12 +25,8 @@ function AdminSignIn({ resolver, updateResolver, createResolver }: any) {
 
   // sending data from server & waiting for response 
   const submitData = () => {
-    // TODO: Submit data via form event
-    //e: FormEvent<HTMLFormElement>
-    //e.preventDefault();
 
     createResolver("signIn", true);
-    console.log(resolver.signIn)
     signIn(collectedData)
       .then((res: any) => {
         // saving auth jwt on cookies

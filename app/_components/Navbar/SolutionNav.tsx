@@ -38,10 +38,10 @@ const SolutionNav = (props: Props) => {
                     <span className='text-neutral-800 font-semibold text-base'>For</span>
 
                     <ul className='text-sm text-neutral-500 mt-1 w-full'>
-                        <Link href="" className='block py-2 hover:text-blue-600'>Teams</Link>
-                        <Link href="" className='block py-2 hover:text-blue-600'>Companies</Link>
-                        <Link href="" className='block py-2 hover:text-blue-600'>Startups</Link>
-                        <Link href="" className='block py-2 hover:text-blue-600'>Developers</Link>
+                        <Link href="#" className='block py-2 hover:text-blue-600'>Teams</Link>
+                        <Link href="#" className='block py-2 hover:text-blue-600'>Companies</Link>
+                        <Link href="#" className='block py-2 hover:text-blue-600'>Startups</Link>
+                        <Link href="#" className='block py-2 hover:text-blue-600'>Developers</Link>
                     </ul>
                 </div>
 
@@ -49,9 +49,9 @@ const SolutionNav = (props: Props) => {
                     <span className='text-neutral-800 font-semibold text-base'>Options</span>
 
                     <ul className='text-sm text-neutral-500 mt-1 w-full'>
-                        <Link href="" className='block py-2 hover:text-blue-600'>Website Integration</Link>
-                        <Link href="" className='block py-2 hover:text-blue-600'>Direct Link</Link>
-                        <Link href="" className='block py-2 hover:text-blue-600'>API</Link>
+                        <Link href="#" className='block py-2 hover:text-blue-600'>Website Integration</Link>
+                        <Link href="#" className='block py-2 hover:text-blue-600'>Direct Link</Link>
+                        <Link href="#" className='block py-2 hover:text-blue-600'>API</Link>
                     </ul>
                 </div>
 
@@ -59,7 +59,7 @@ const SolutionNav = (props: Props) => {
 
                     <span className='text-neutral-800 font-semibold text-base'>Guides</span>
                     <ul className='text-sm text-neutral-500 mt-1 w-full'>
-                        <Link href="" className='block py-2 hover:text-blue-600'>Setup</Link>
+                        <Link href="#" className='block py-2 hover:text-blue-600'>Setup</Link>
                     </ul>
                 </div>
             </div>

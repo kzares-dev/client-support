@@ -1,16 +1,53 @@
 "use client"
-
-import { Button, InputText } from '@components/common'
+import { Button, InputText, Loader } from '@components/common'
 import { ArrowBigRight, Key } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
+import Cookies from "js-cookie"
+import { useRouter } from 'next/navigation'
+import withResolver from '@hoc/resolver.hoc'
+import { toast } from 'react-toastify'
+import { signIn } from '@server/worker.api'
 
-function WorkerSignIn() {
+
+function WorkerSignIn({ resolver, updateResolver, createResolver }: any) {
 
   const [collectedData, setCollectedData] = useState<{ email: string, password: string }>({
     email: "",
     password: '',
   })
+
+  // set up router for redirecting when request is filled
+  const router = useRouter()
+
+  // sending data from server & waiting for response 
+  const submitData = () => {
+
+    createResolver("signIn", true);
+
+    signIn(collectedData)
+      .then((res: any) => {
+        // saving auth jwt on cookies
+        Cookies.set("workerToken", res.access_token, {
+          expires: 30,
+          path: "/"
+        })
+
+        toast.success("Sign-in completed")
+        router.push("/worker/dashboard")
+
+      })
+      .catch((err) => {
+        console.log(err)
+        toast.error("Error to sign in")
+
+      })
+      .finally(() => {
+        updateResolver("signIn")
+      })
+
+  }
+
 
   return (
     <div className="flex-container w-full min-h-[100vh] bg-gray-50 p-4">
@@ -42,7 +79,18 @@ function WorkerSignIn() {
 
         <div className="flex-1 pt-10 w-full flex items-end justify-between ">
           <Button text="Signin as admin" fill={true} Icon={<Key color="white" />} />
-          <Button text="Continue" fill={true} Icon={<ArrowBigRight color="white" />} />
+          {resolver.signIn ?
+            <Loader width={65} height={65} /> :
+            <Button
+              onClick={submitData}
+              text="Continue"
+              fill={true}
+              Icon={<ArrowBigRight
+                color="white" />
+              }
+            />
+
+          }
         </div>
 
 
@@ -51,4 +99,4 @@ function WorkerSignIn() {
   )
 }
 
-export default WorkerSignIn
+export default withResolver(WorkerSignIn)

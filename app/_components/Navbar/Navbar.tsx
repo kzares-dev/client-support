@@ -54,9 +54,9 @@ const Navbar = (props: Props) => {
                             </div>
 
                             <div className='max-lg:flex justify-center max-lg:border-[1px] max-lg:mr-4 rounded-md max-lg:bg-gray-800'>
-                                <a href="" className='hover:text-neutral-400 max-lg:py-2 max-lg:text-[16px] max-lg:font-semibold '>Sign in</a>
+                                <a href="#" className='hover:text-neutral-400 max-lg:py-2 max-lg:text-[16px] max-lg:font-semibold '>Sign in</a>
                             </div>
-                            <a href="" className='max-lg:hidden px-2 py-[5px] border-[1px] rounded-md hover:text-neutral-400 '>Sign up</a>
+                            <a href="#" className='max-lg:hidden px-2 py-[5px] border-[1px] rounded-md hover:text-neutral-400 '>Sign up</a>
                         </div>
                     </div>
                 </div>

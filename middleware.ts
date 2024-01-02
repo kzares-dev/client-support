@@ -32,18 +32,18 @@ export async function middleware(request: NextRequest,) {
 
         return NextResponse.redirect(new URL('/admin/auth/signin', request.url))
     }
-
-
+    
+    
     if (request.nextUrl.pathname.startsWith("/worker")) {
         // Now check if user is not loged in as an admin but is loged as a worker
 
         const workerToken = request.cookies.get("workerToken")
-
         if (workerToken?.value) {
-            // if the token exists and is valid, retake path, else redirect to login page
 
+            console.log(workerToken.value)
+            // if the token exists and is valid, retake path, else redirect to login page
             try {
-                await jwtVerify(workerToken.value, new TextEncoder().encode(process.env.WORKER_JWT_DECODER))
+                await jwtVerify(workerToken.value, new TextEncoder().encode("WORKER_JWT_DECODER"))
 
                 // returning path
                 return NextResponse.next();

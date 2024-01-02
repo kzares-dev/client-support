@@ -26,11 +26,11 @@ const Sidebar = () => {
         <ul className='text-neutral-500 mt-1 w-full'>
 
           <li >
-            <a href="" className='block py-2 hover:text-blue-600'>Setup guide</a>
+            <a href="#" className='block py-2 hover:text-blue-600'>Setup guide</a>
           </li>
 
           <li >
-            <a href="" className='block py-2 hover:text-blue-600'>Other guide</a>
+            <a href="#" className='block py-2 hover:text-blue-600'>Other guide</a>
           </li>
 
         </ul>
@@ -39,19 +39,19 @@ const Sidebar = () => {
         <span className='text-neutral-800 font-semibold text-lg'>Account</span>
         <ul className='text-neutral-500 mt-1 w-full'>
           <li >
-            <a href="" className='block py-2 hover:text-blue-600'>API key</a>
+            <a href="#" className='block py-2 hover:text-blue-600'>API key</a>
           </li>
 
           <li >
-            <a href="" className='block py-2 hover:text-blue-600'>Profile</a>
+            <a href="#" className='block py-2 hover:text-blue-600'>Profile</a>
           </li>
 
           <li >
-            <a href="" className='block py-2 hover:text-blue-600'>Upgrade</a>
+            <a href="#" className='block py-2 hover:text-blue-600'>Upgrade</a>
           </li>
 
           <li >
-            <a href="" className='block py-2 hover:text-blue-600'>LogOut</a>
+            <a href="#" className='block py-2 hover:text-blue-600'>LogOut</a>
           </li>
 
         </ul>

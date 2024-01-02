@@ -2,6 +2,12 @@
 
 import { useState } from "react";
 
+export interface Resolver {
+  resolver: any; // Tipo para resolver
+  updateResolver: (key: string) => void;
+  createResolver: (key: string, value: boolean) => void
+}
+
 export default function withResolver(Component: any) {
   return function withResolver(props: any) {
 
