@@ -2,6 +2,7 @@ import { NextResponse, NextRequest } from 'next/server'
 import { jwtVerify } from 'jose'
 
 export async function middleware(request: NextRequest,) {
+    console.log(request.url)
 
     // Check if the client is in a  auth route 
     // this action prevent the infinite loop of redirections
@@ -33,7 +34,7 @@ export async function middleware(request: NextRequest,) {
     }
 
 
-    if (request.nextUrl.pathname.startsWith("worker")) {
+    if (request.nextUrl.pathname.startsWith("/worker")) {
         // Now check if user is not loged in as an admin but is loged as a worker
 
         const workerToken = request.cookies.get("workerToken")

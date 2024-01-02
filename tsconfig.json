@@ -21,7 +21,9 @@
     "paths": {
       "@/*": ["./*"],
       "@components/*": ["./app/_components/*"],
-      "@server/*": ["./app/api/*"],
+      "@server/*": ["./app/_api/*"],
+      "@hoc/*": ["./app/_hoc/*"],
+
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "components/Overview/Analytics", "components/Overview/Usage"],

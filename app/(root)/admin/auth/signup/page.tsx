@@ -1,20 +1,61 @@
 "use client";
 
-import { Button, InputText } from "@components/common"
+import { Button, InputText, Loader } from "@components/common"
 import { Plans } from "../_components/Plans"
 import { ArrowBigRight, HardHat } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
+import { toast } from "react-toastify";
+import { Admin, signUp } from "@server/admin.api";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
+import withResolver from "@hoc/resolver.hoc";
 
-function AdminSignUp() {
+function AdminSignUp({ resolver, createResolver, updateResolver }: any) {
 
-  const [collectedData, setCollectedData] = useState<{ email: string, password: string, name: string, company: string, planType: string }>({
+  // set up router for redirecting when request is filled
+  const router = useRouter()
+
+  // State for collecting data
+  const [collectedData, setCollectedData] = useState<Admin>({
     email: "",
     password: '',
     name: "",
     company: "",
-    planType: "free"
+    plan: "free"
   })
+
+
+  // sending data from server & waiting for response 
+  const submitData = () => {
+    // TODO: Submit data via form event
+    //e: FormEvent<HTMLFormElement>
+    //e.preventDefault();
+
+    createResolver("signUp", true)
+
+    signUp(collectedData)
+      .then(async (res: any) => {
+        console.log(res.access_token)
+        // saving auth jwt on cookies
+        Cookies.set("adminToken", res.access_token, {
+          expires: 30,
+          path: "/",
+        })
+
+        toast.success("Account created succesfully")
+        router.push("/admin/dashboard")
+
+      })
+      .catch((err) => {
+        toast.error("Error to sign up")
+
+      })
+      .finally(() => {
+        updateResolver("signIn")
+      })
+
+  }
 
 
   return (
@@ -66,7 +107,20 @@ function AdminSignUp() {
 
           <div className="flex-1 pt-10  flex items-end justify-between ">
             <Button text="Enter as a worker" fill={true} Icon={<HardHat color="white" />} />
-            <Button text="Continue" fill={true} Icon={<ArrowBigRight color="white" />} />
+
+            {resolver.signUp ?
+              <Loader className="-mb-3" width={75} height={75} />
+              :
+              <Button
+                onClick={submitData}
+                text="Continue"
+                fill={true}
+                Icon={<ArrowBigRight
+                  color="white" />
+                }
+              />
+
+            }
           </div>
 
 
@@ -78,9 +132,9 @@ function AdminSignUp() {
           <h1 className="text-[40px] pl-4 leading-1 font-normal leading-1 text-gray-500 underline">Choose your plan</h1>
 
           <div className="pt-10">
-            <Plans 
-            currentPlan={collectedData.planType}
-            setPlanType={(planType: any) => setCollectedData({ ...collectedData, planType: planType }) } />
+            <Plans
+              currentPlan={collectedData.plan}
+              setPlanType={(plan: any) => setCollectedData({ ...collectedData, plan: plan })} />
           </div>
         </div>
 
@@ -90,4 +144,4 @@ function AdminSignUp() {
   )
 }
 
-export default AdminSignUp
+export default withResolver(AdminSignUp)

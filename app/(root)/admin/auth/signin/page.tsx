@@ -1,17 +1,60 @@
 "use client"
-
-import { signIn } from '@/app/_server-actions/admin.action'
-import { Button, InputText } from '@components/common'
+import { useState } from 'react'
 import { ArrowBigRight, HardHat } from 'lucide-react'
 import Link from 'next/link'
-import { useState } from 'react'
+import { Button, InputText, Loader } from '@components/common'
+import { Admin, signIn } from "@server/admin.api"
+import { toast } from 'react-toastify'
+import Cookies from "js-cookie"
+import { useRouter } from 'next/navigation'
+import withResolver from '@hoc/resolver.hoc'
 
-function AdminSignIn() {
+function AdminSignIn({ resolver, updateResolver, createResolver }: any) {
 
-  const [collectedData, setCollectedData] = useState<{ email: string, password: string }>({
+  // set up router for redirecting when request is filled
+  const router = useRouter()
+
+  // State for collecting data
+  const [collectedData, setCollectedData] = useState<{
+    email: string,
+    password: string
+  }>({
     email: "",
     password: '',
   })
+
+  // sending data from server & waiting for response 
+  const submitData = () => {
+    // TODO: Submit data via form event
+    //e: FormEvent<HTMLFormElement>
+    //e.preventDefault();
+
+    createResolver("signIn", true);
+    console.log(resolver.signIn)
+    signIn(collectedData)
+      .then((res: any) => {
+        // saving auth jwt on cookies
+        Cookies.set("adminToken", res.access_token, {
+          expires: 30,
+          path: "/"
+        })
+
+        toast.success("Sign-in completed")
+        router.push("/admin/dashboard")
+
+      })
+      .catch((err) => {
+        console.log(err)
+        toast.error("Error to sign in")
+
+      })
+      .finally(() => {
+        updateResolver("signIn")
+      })
+
+  }
+
+
 
   return (
     <div className="flex-container w-full min-h-[100vh] bg-gray-50 p-4">
@@ -19,7 +62,7 @@ function AdminSignIn() {
 
         <h1 className="text-[40px] font-normal leading-1 underline text-gray-800 "> SignIn </h1>
 
-        <div className="pt-10 flex flex-col gap-5 w-full">
+        <form className="pt-10 flex flex-col gap-5 w-full">
 
           <InputText
             name="email"
@@ -35,7 +78,7 @@ function AdminSignIn() {
             type="password" />
 
 
-        </div>
+        </form>
 
 
         <Link href="/admin/auth/signup" className="pt-5 w-full underline font-bold text-gray-500 pl-2 " >
@@ -45,7 +88,19 @@ function AdminSignIn() {
 
         <div className="flex-1 pt-10 w-full flex items-end justify-between ">
           <Button text="Signin as a worker" fill={true} Icon={<HardHat color="white" />} />
-          <Button text="Continue" fill={true} Icon={<ArrowBigRight color="white" />} />
+
+          { resolver.signIn ?
+            <Loader width={65} height={65} /> :
+            <Button
+              onClick={submitData}
+              text="Continue"
+              fill={true}
+              Icon={<ArrowBigRight
+                color="white" />
+              }
+            />
+
+          }
         </div>
 
 
@@ -54,4 +109,4 @@ function AdminSignIn() {
   )
 }
 
-export default AdminSignIn
+export default withResolver(AdminSignIn)
