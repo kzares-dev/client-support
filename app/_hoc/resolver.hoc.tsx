@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 export interface Resolver {
-  resolver: any; // Tipo para resolver
+  value: any; // Tipo para resolver
   updateResolver: (key: string) => void;
   createResolver: (key: string, value: boolean) => void
 }
@@ -20,12 +20,19 @@ export default function withResolver(Component: any) {
 
     const createResolver = (key: string, value: boolean) => {
 
-      setResolver({ ...resolver, [key]: value  })
+      setResolver({ ...resolver, [key]: value })
+    }
+
+
+    const resolverObj = {
+      value: resolver,
+      createResolver: createResolver,
+      updateResolver: updateResolver,
     }
 
 
 
-    return <Component {...props} resolver={resolver} updateResolver={updateResolver} createResolver={createResolver} />
+    return <Component {...props} resolver={resolverObj} />
   }
 }
 

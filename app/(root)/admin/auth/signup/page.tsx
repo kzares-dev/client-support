@@ -9,9 +9,9 @@ import { toast } from "react-toastify";
 import { Admin, signUp } from "@server/admin.api";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
-import withResolver from "@hoc/resolver.hoc";
+import withResolver, { Resolver } from "@hoc/resolver.hoc";
 
-function AdminSignUp({ resolver, createResolver, updateResolver }: any) {
+function AdminSignUp({ resolver }: { resolver: Resolver }) {
 
   // set up router for redirecting when request is filled
   const router = useRouter()
@@ -32,7 +32,7 @@ function AdminSignUp({ resolver, createResolver, updateResolver }: any) {
     //e: FormEvent<HTMLFormElement>
     //e.preventDefault();
 
-    createResolver("signUp", true)
+    resolver.createResolver("signUp", true)
 
     signUp(collectedData)
       .then(async (res: any) => {
@@ -52,7 +52,7 @@ function AdminSignUp({ resolver, createResolver, updateResolver }: any) {
 
       })
       .finally(() => {
-        updateResolver("signIn")
+        resolver.updateResolver("signIn")
       })
 
   }
@@ -108,17 +108,18 @@ function AdminSignUp({ resolver, createResolver, updateResolver }: any) {
           <div className="flex-1 pt-10  flex items-end justify-between ">
             <Button text="Enter as a worker" fill={true} Icon={<HardHat color="white" />} />
 
-            {resolver.signUp ?
+            {resolver.value.signUp ?
               <Loader className="-mb-3" width={75} height={75} />
               :
-              <Button
-                onClick={submitData}
-                text="Continue"
-                fill={true}
-                Icon={<ArrowBigRight
-                  color="white" />
-                }
-              />
+              <div onClick={submitData}>
+                <Button
+                  text="Continue"
+                  fill={true}
+                  Icon={<ArrowBigRight
+                    color="white" />
+                  }
+                />
+              </div>
 
             }
           </div>

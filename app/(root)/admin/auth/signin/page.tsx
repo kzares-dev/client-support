@@ -7,9 +7,9 @@ import { Admin, signIn } from "@server/admin.api"
 import { toast } from 'react-toastify'
 import Cookies from "js-cookie"
 import { useRouter } from 'next/navigation'
-import withResolver from '@hoc/resolver.hoc'
+import withResolver, { Resolver } from '@hoc/resolver.hoc'
 
-function AdminSignIn({ resolver, updateResolver, createResolver }: any) {
+function AdminSignIn({ resolver }: { resolver: Resolver }) {
 
   // set up router for redirecting when request is filled
   const router = useRouter()
@@ -26,7 +26,7 @@ function AdminSignIn({ resolver, updateResolver, createResolver }: any) {
   // sending data from server & waiting for response 
   const submitData = () => {
 
-    createResolver("signIn", true);
+    resolver.createResolver("signIn", true);
     signIn(collectedData)
       .then((res: any) => {
         // saving auth jwt on cookies
@@ -45,7 +45,7 @@ function AdminSignIn({ resolver, updateResolver, createResolver }: any) {
 
       })
       .finally(() => {
-        updateResolver("signIn")
+        resolver.updateResolver("signIn")
       })
 
   }
@@ -85,16 +85,17 @@ function AdminSignIn({ resolver, updateResolver, createResolver }: any) {
         <div className="flex-1 pt-10 w-full flex items-end justify-between ">
           <Button text="Signin as a worker" fill={true} Icon={<HardHat color="white" />} />
 
-          { resolver.signIn ?
+          {resolver.value.signIn ?
             <Loader width={65} height={65} /> :
-            <Button
-              onClick={submitData}
-              text="Continue"
-              fill={true}
-              Icon={<ArrowBigRight
-                color="white" />
-              }
-            />
+            <div onClick={submitData}>
+              <Button
+                text="Continue"
+                fill={true}
+                Icon={<ArrowBigRight
+                  color="white" />
+                }
+              />
+            </div>
 
           }
         </div>

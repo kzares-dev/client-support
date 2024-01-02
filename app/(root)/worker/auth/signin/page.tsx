@@ -5,12 +5,12 @@ import Link from 'next/link'
 import { useState } from 'react'
 import Cookies from "js-cookie"
 import { useRouter } from 'next/navigation'
-import withResolver from '@hoc/resolver.hoc'
+import withResolver, { Resolver } from '@hoc/resolver.hoc'
 import { toast } from 'react-toastify'
 import { signIn } from '@server/worker.api'
 
 
-function WorkerSignIn({ resolver, updateResolver, createResolver }: any) {
+function WorkerSignIn({ resolver }: { resolver: Resolver }) {
 
   const [collectedData, setCollectedData] = useState<{ email: string, password: string }>({
     email: "",
@@ -23,7 +23,7 @@ function WorkerSignIn({ resolver, updateResolver, createResolver }: any) {
   // sending data from server & waiting for response 
   const submitData = () => {
 
-    createResolver("signIn", true);
+    resolver.createResolver("signIn", true);
 
     signIn(collectedData)
       .then((res: any) => {
@@ -43,7 +43,7 @@ function WorkerSignIn({ resolver, updateResolver, createResolver }: any) {
 
       })
       .finally(() => {
-        updateResolver("signIn")
+        resolver.updateResolver("signIn")
       })
 
   }
@@ -79,16 +79,17 @@ function WorkerSignIn({ resolver, updateResolver, createResolver }: any) {
 
         <div className="flex-1 pt-10 w-full flex items-end justify-between ">
           <Button text="Signin as admin" fill={true} Icon={<Key color="white" />} />
-          {resolver.signIn ?
+          {resolver.value.signIn ?
             <Loader width={65} height={65} /> :
-            <Button
-              onClick={submitData}
-              text="Continue"
-              fill={true}
-              Icon={<ArrowBigRight
-                color="white" />
-              }
-            />
+            <div onClick={submitData} >
+              <Button
+                text="Continue"
+                fill={true}
+                Icon={<ArrowBigRight
+                  color="white" />
+                }
+              />
+            </div>
 
           }
         </div>

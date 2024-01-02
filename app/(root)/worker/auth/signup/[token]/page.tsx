@@ -10,8 +10,8 @@ import { useRouter } from "next/navigation";
 
 
 function WorkerSignUp(
-  { params, resolver, createResolver, updateResolver }
-    : { params: { token: string }, resolver: Resolver["resolver"], createResolver: Resolver["createResolver"], updateResolver: Resolver["updateResolver"] }
+  { params, resolver }
+    : { params: { token: string }, resolver: Resolver  }
 ) {
 
   // Collect data from the user 
@@ -24,7 +24,7 @@ function WorkerSignUp(
 
   // creating a resolver and requesting an invitation verification to the server 
   useEffect(() => {
-    createResolver("validateInvitation", true);
+    resolver.createResolver("validateInvitation", true);
 
     validateInvitation(params.token)
       .then((res: any) => {
@@ -35,7 +35,7 @@ function WorkerSignUp(
         toast.error("Invalid Invitation")
       })
       .finally(() => {
-        updateResolver("validateInvitation")
+        resolver.updateResolver("validateInvitation")
       })
 
   }, [])
@@ -46,7 +46,7 @@ function WorkerSignUp(
   // sending data from server & wait for response 
   const submitData = () => {
 
-    createResolver("signUp", true)
+    resolver.createResolver("signUp", true)
 
     signUp(collectedData)
       .then((res: any) => {
@@ -66,12 +66,12 @@ function WorkerSignUp(
 
       })
       .finally(() => {
-        updateResolver("signUp")
+        resolver.updateResolver("signUp")
       })
   }
 
   // render page loader while verification is pending 
-  if (resolver.validateInvitation) return (
+  if (resolver.value.validateInvitation) return (
     <div className="flex items-center justify-center flex-1 min-h-screen flex-col gap-1">
       <Loader />
       <h1 className="text-xl font-bold text-gray-300">Validating your invitation</h1>
@@ -101,7 +101,7 @@ function WorkerSignUp(
         </div>
 
         <div className="flex-1 pt-10 w-full flex items-end justify-end ">
-          {resolver.signUp ?
+          {resolver.value.signUp ?
             <Loader width={65} height={65} /> :
             <div onClick={submitData}>
               <Button
