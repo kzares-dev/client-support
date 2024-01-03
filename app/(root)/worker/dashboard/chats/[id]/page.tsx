@@ -24,8 +24,8 @@ function ChatBox({ params, resolver }
   }, [params.id])
 
   return (
-    <section className="flex-1 flex  h-full">
-      <div className="flex-1 bg-gray-50 overflow-auto scrollbar-hide p-5 border-b flex flex-col gap-5">
+    <section className="flex-1 flex h-full">
+      <div className="flex-1 bg-gray-100 overflow-auto scrollbar-hide p-5 border-b flex flex-col gap-5">
 
         {resolver.value.chatMessages ? <MessageShrimmerContainer /> : (
           messages.map((message: Message ) => <MessageCard {...message} />)
