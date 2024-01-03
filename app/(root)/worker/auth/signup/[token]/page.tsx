@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 
 function WorkerSignUp(
   { params, resolver }
-    : { params: { token: string }, resolver: Resolver  }
+    : { params: { token: string }, resolver: Resolver }
 ) {
 
   // Collect data from the user 
@@ -24,20 +24,16 @@ function WorkerSignUp(
 
   // creating a resolver and requesting an invitation verification to the server 
   useEffect(() => {
-    resolver.create("validateInvitation");
 
-    validateInvitation(params.token)
-      .then((res: any) => {
+    resolver.set({
+      action: () => signUp(collectedData),
+      key: "validateInvitation",
+      callback: (res) => {
         setCollectedData({ ...collectedData, companyId: res.companyId })
         toast.success("Invitation Confirmed")
-      })
-      .catch(() => {
-        toast.error("Invalid Invitation")
-      })
-      .finally(() => {
-        resolver.end("validateInvitation")
-      })
-
+      },
+      error: (error) => toast.error("Invalid Invitation"),
+    })
   }, [])
 
   // set up router for redirecting when request is filled
@@ -46,11 +42,10 @@ function WorkerSignUp(
   // sending data from server & wait for response 
   const submitData = () => {
 
-    resolver.create("signUp")
-
-    signUp(collectedData)
-      .then((res: any) => {
-        // saving auth jwt on cookies
+    resolver.set({
+      action: () => signUp(collectedData),
+      key: "signUp",
+      callback: (res) => {
         Cookies.set("workerToken", res.access_token, {
           expires: 30,
           path: "/"
@@ -58,16 +53,9 @@ function WorkerSignUp(
 
         toast.success("Account created succesfully")
         router.push("/worker/dashboard")
-
-      })
-      .catch((err) => {
-        console.log(err)
-        toast.error("Error to sign up")
-
-      })
-      .finally(() => {
-        resolver.end("signUp")
-      })
+      },
+      error: (error) => toast.error("Error to signing up"),
+    })
   }
 
   // render page loader while verification is pending 

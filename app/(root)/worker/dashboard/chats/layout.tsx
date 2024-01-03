@@ -15,19 +15,14 @@ function Chats({ resolver, children }: { resolver: Resolver, children: React.Rea
 
     useEffect(() => {
 
-        resolver.create("getChats");
 
-        // Fetch the active chats
-        getActiveChats()
-            .then((res: Chat[]) => {
-                setActiveChats(res)
-            })
-            .catch(() => {
-                toast.error("Failed to load chats")
-            })
-            .finally(() => {
-                resolver.end("getChats");
-            })
+        resolver.set({
+            action:() => getActiveChats(),
+            key: "getChats",
+            callback: res => setActiveChats(res),
+            error: error => toast.error("Failed to load chats"),
+
+        })
 
     }, [])
 

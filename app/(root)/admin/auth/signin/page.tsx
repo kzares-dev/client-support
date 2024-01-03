@@ -25,10 +25,12 @@ function AdminSignIn({ resolver }: { resolver: Resolver }) {
 
   // sending data from server & waiting for response 
   const submitData = () => {
+    console.log(resolver.value.signIn)
 
-    resolver.create("signIn");
-    signIn(collectedData)
-      .then((res: any) => {
+    resolver.set({
+      key: "signIn",
+      callback: (res: any) => {
+
         // saving auth jwt on cookies
         Cookies.set("adminToken", res.access_token, {
           expires: 30,
@@ -37,16 +39,13 @@ function AdminSignIn({ resolver }: { resolver: Resolver }) {
 
         toast.success("Sign-in completed")
         router.push("/admin/dashboard")
+      },
+      error: (err: any) => {
 
-      })
-      .catch((err) => {
-        console.log(err)
         toast.error("Error to sign in")
-
-      })
-      .finally(() => {
-        resolver.end("signIn")
-      })
+      },
+      action: () => signIn(collectedData),
+    })
 
   }
 

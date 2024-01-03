@@ -13,19 +13,14 @@ function ChatBox({ params, resolver }
 
 
   useEffect(() => {
-    resolver.create("chatMessages")
-
-    getChatMessages(params.id)
-      .then((res: Message[]) => {
-        setMessages(res)
-      })
-      .catch(() => {
-        toast.error("Failed to load messages")
-      })
-      .finally(() => {
-        resolver.end("chatMessages")
-      })
-
+   
+    resolver.set({
+      key: "chatMessages",
+      action: () => getChatMessages(""),
+      callback: res => setMessages(res),
+      error: error => toast.error("Failed to load messages"),
+    })
+    
   }, [params.id])
 
   return (

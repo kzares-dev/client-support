@@ -1,42 +1,60 @@
-"use client";
+import { useState } from "react"
 
-import { useEffect, useState } from "react";
-
-export interface Resolver {
-  value: any; // Tipo para resolver
-  end: (key: string) => void;
-  create: (key: string) => void
+type setProps = {
+    action: () => Promise<unknown>
+    key: string,
+    callback: (res: any) => void,
+    error: (res: any) => void,
 }
 
-export default function withResolver(Component: any, initialResolver?: string[]) {
-  return function withResolver(props: any) {
+export interface Resolver {
+    value: any,
+    set: ({ key, callback, error, action }: setProps) => Promise<any>
+}
 
-    const [resolver, setResolver] = useState<any>({})
+export default function withResolver(Component: any) {
+    return function withResolver(props: any) {
 
-    const end = (key: string) => {
-
-      setResolver((prev: any) => {
-        return { ...prev, [key]: false }
-      })
+        const [resolvers, setResolvers] = useState<any>({})
 
 
+        const create = (key: string) => {
+
+            setResolvers((prev: any) => {
+                return { ...prev, [key]: true }
+            })
+        }
+
+        const end = (key: string) => {
+
+            setResolvers((prev: any) => {
+                return { ...prev, [key]: false }
+            })
+
+
+        }
+
+        const set = async ({ action, key, callback, error }: setProps) => {
+
+            
+            // First create a resolve atribute to track the promise progress
+           create(key)
+
+            action()
+                .then((res) => callback(res))
+                .catch((err) => error(err))
+                .finally(() => end(key) )
+                    
+
+
+        }
+
+        const resolver = {
+            value: resolvers,
+            set
+        }
+
+        return <Component {...props} resolver={resolver} />
     }
-
-    const create = (key: string) => {
-
-      setResolver((prev: any) => {
-        return { ...prev, [key]: true }
-      })
-      console.log(resolver)
-    }
-
-    const resolverObj = {
-      value: resolver,
-      create: create,
-      end: end,
-    }
-
-    return <Component {...props} resolver={resolverObj} />
-  }
 }
 

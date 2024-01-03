@@ -32,11 +32,11 @@ function AdminSignUp({ resolver }: { resolver: Resolver }) {
     //e: FormEvent<HTMLFormElement>
     //e.preventDefault();
 
-    resolver.create("signUp")
+    resolver.set({
+      action: () => signUp(collectedData),
+      key: "signUp",
+      callback: (res) => {
 
-    signUp(collectedData)
-      .then(async (res: any) => {
-        console.log(res.access_token)
         // saving auth jwt on cookies
         Cookies.set("adminToken", res.access_token, {
           expires: 30,
@@ -45,15 +45,9 @@ function AdminSignUp({ resolver }: { resolver: Resolver }) {
 
         toast.success("Account created succesfully")
         router.push("/admin/dashboard")
-
-      })
-      .catch((err) => {
-        toast.error("Error to sign up")
-
-      })
-      .finally(() => {
-        resolver.end("signIn")
-      })
+      },
+      error: (error) => toast.error("Error to signing up"),
+    })
 
   }
 

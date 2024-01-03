@@ -21,34 +21,22 @@ function Members({ resolver }: { resolver: Resolver }) {
   const [inviteLinks, setInviteLinks] = useState<string[]>([])
 
   useEffect(() => {
+
     // Calling the server to retrieve the workers link to the organization
-    resolver.create("members")
-
-    getCompanyMembers("") // TODO: Is needed to store the session data 
-      .then((res: any) => {
-        setMembers(res)
-      })
-      .catch(() => {
-
-      })
-      .finally(() => {
-        resolver.end("members")
-      })
+    resolver.set({
+      key: "members",
+      action: () => getCompanyMembers(""),
+      callback: (res) => setMembers(res),
+      error: (error) => { }
+    })
 
     // Calling the server to retrieve the invite links for the creation of new accounts
-    resolver.create("inviteLinks")
-
-    getInviteLinks("") // TODO: Is needed to store the session data 
-      .then((res: any) => {
-        setInviteLinks(res)
-      })
-      .catch(() => {
-
-      })
-      .finally(() => {
-        resolver.end("inviteLinks")
-      })
-
+    resolver.set({
+      key: "inviteLinks",
+      action: () => getInviteLinks(""),
+      callback: (res) => setInviteLinks(res),
+      error: (error) => { }
+    })
 
   }, []);
 
@@ -64,18 +52,16 @@ function Members({ resolver }: { resolver: Resolver }) {
 
   // This function is to request a new user invitation
   const requestInvitation = () => {
-    resolver.create("requestInvitation");
 
-    generateInviteLink("")
-      .then((res: any) => {
+    resolver.set({
+      key: "requestInvitation",
+      action: () => generateInviteLink(""),
+      callback: (res) => {
         setInviteLinks(res);
         toast.success("Invite link generated")
-      })
-      .catch(() => {
-        toast.error("Failed to create invite link")
-      })
-      .finally(() => resolver.end("requestInvitation"))
-
+      },
+      error: (error) => toast.error("Failed to create invite link"),
+    });
   }
 
   // Method to delete user
@@ -86,25 +72,21 @@ function Members({ resolver }: { resolver: Resolver }) {
     setConfirmation({
       message: "Are you shure you whant to remove this worker?",
       show: true,
-      callback: () => deleteWorker(workerId) ,
+      callback: () => deleteWorker(workerId),
     })
   }
 
   const deleteWorker = (workerId: string) => {
-    resolver.create(workerId);
 
-    deleteWorkers("companyId", "workerId")
-      .then((res: any) => {
+    resolver.set({
+      key: workerId,  
+      action: () => deleteWorkers("companyId", "workerId"),
+      callback: (res) => {
         setMembers(res)
         toast.success("Worker deleted succesfully")
-      })
-      .catch(() => {
-        toast.error("Failed to delete worker")
-      })
-      .finally(() => {
-        resolver.end(workerId)
-      })
-
+      },
+      error: (error) =>  toast.error("Failed to delete worker"),
+    });
 
   }
 
@@ -173,4 +155,4 @@ function Members({ resolver }: { resolver: Resolver }) {
   )
 }
 
-export default withResolver(Members, ["members"])
+export default withResolver(Members)

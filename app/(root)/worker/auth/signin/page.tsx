@@ -23,10 +23,10 @@ function WorkerSignIn({ resolver }: { resolver: Resolver }) {
   // sending data from server & waiting for response 
   const submitData = () => {
 
-    resolver.create("signIn");
+    resolver.set({
+      key: "signIn",
+      callback: (res: any) => {
 
-    signIn(collectedData)
-      .then((res: any) => {
         // saving auth jwt on cookies
         Cookies.set("workerToken", res.access_token, {
           expires: 30,
@@ -35,16 +35,13 @@ function WorkerSignIn({ resolver }: { resolver: Resolver }) {
 
         toast.success("Sign-in completed")
         router.push("/worker/dashboard")
+      },
+      error: (err: any) => {
 
-      })
-      .catch((err) => {
-        console.log(err)
         toast.error("Error to sign in")
-
-      })
-      .finally(() => {
-        resolver.end("signIn")
-      })
+      },
+      action: () => signIn(collectedData),
+    })
 
   }
 

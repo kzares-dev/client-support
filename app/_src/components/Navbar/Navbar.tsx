@@ -10,7 +10,7 @@ const Navbar = (props: Props) => {
     const [showNav, setShowNav] = useState(false)
 
     return (
-        <nav className='absolute w-full text-black py-5 box px-4 xl:px-[150px] lg:px-[100px] '>
+        <nav className='fixed top-0 w-full text-black py-5 box px-4 xl:px-[150px] lg:px-[100px] '>
             <div className='flex items-center gap-5 max-lg:justify-between max-lg:flex-row-reverse'>
 
                 <div className='flex justify-between items-center max-lg:w-full'>

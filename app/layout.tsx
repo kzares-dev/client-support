@@ -16,9 +16,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-gray-50">
+      <body className="bg-gray-50 ">
         <Navbar />
-        <div className="pt-[100px] ">
+        <div className="">
           {children}
         </div>
         <ToastContainer newestOnTop position="bottom-right" />

@@ -11,7 +11,7 @@ export default function RootLayout({
     children: React.ReactNode
 }) {
     return (
-        <section className="flex-1 min-h-screen px-3 py-5" >
+        <section className="flex-1 min-h-screen pt-[100px] lg:pt-[150px] px-3 py-5" >
 
 
             <div className="w-full max-w-[1500px] h-[80vh] bg-white border border-[#00000020] flex flex-row rounded-md overflow-hidden mx-auto">
