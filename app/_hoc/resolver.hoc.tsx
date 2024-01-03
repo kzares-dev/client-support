@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 
 export interface Resolver {
   value: any; // Tipo para resolver
-  updateResolver: (key: string, value? : boolean) => void;
-  createResolver: (key: string, value: boolean) => void
+  end: (key: string) => void;
+  create: (key: string) => void
 }
 
 export default function withResolver(Component: any, initialResolver?: string[]) {
@@ -13,31 +13,27 @@ export default function withResolver(Component: any, initialResolver?: string[])
 
     const [resolver, setResolver] = useState<any>({})
 
-    const updateResolver = (key: string, value?: boolean) => {
+    const end = (key: string) => {
 
-      if (value !== undefined) {
-        setResolver(value)
-      } else {
-        setResolver((prev: any) => {
-          return { ...prev, key: !resolver[key] }
-        })
-      }
+      setResolver((prev: any) => {
+        return { ...prev, [key]: false }
+      })
 
 
     }
 
-    const createResolver = (key: string, value: boolean) => {
+    const create = (key: string) => {
 
       setResolver((prev: any) => {
-        return { ...prev, [key]: value }
+        return { ...prev, [key]: true }
       })
       console.log(resolver)
     }
 
     const resolverObj = {
       value: resolver,
-      createResolver: createResolver,
-      updateResolver: updateResolver,
+      create: create,
+      end: end,
     }
 
     return <Component {...props} resolver={resolverObj} />

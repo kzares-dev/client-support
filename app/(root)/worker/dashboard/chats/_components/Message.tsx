@@ -1,14 +1,17 @@
+import { Message } from "@server/worker.api"
 
 function Message({
-  fromClient
-}: {
-  fromClient: boolean
-}) {
+  fromClient,
+  id,
+  text,
+  date,
+}: Message) {
   return (
-    <div className={`w-full flex ${fromClient? "" : "justify-end "} `}>
+    <div className={`w-full flex ${fromClient ? "" : "justify-end "} `}>
 
-      <div className={`pl-3 pr-1 py-2 bg-white w-auto max-w-[300px] border pt-3  font-sans text-[15px] leading-7 ${fromClient? "rounded-tr-lg rounded-bl-lg" : "rounded-tl-lg rounded-br-lg bg-gray-100 border-[#00000020]"}`}>
-        Message Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illo, ipsa. 
+      <div className={`p-6 py-2 w-full bg-gray-100 shadow  
+      rounded-bl-none text-left max-w-[400px] text-gray-700 border pt-3 rounded-md font-sans text-[15px] leading-7 ${!fromClient && "bg-gray-200 rounded-br-none border-[#00000020] text-gray-600 "}`}>
+        {text}
       </div>
 
     </div>
