@@ -24,7 +24,7 @@ function WorkerSignUp(
 
   // creating a resolver and requesting an invitation verification to the server 
   useEffect(() => {
-    resolver.createResolver("validateInvitation", true);
+    resolver.create("validateInvitation");
 
     validateInvitation(params.token)
       .then((res: any) => {
@@ -35,7 +35,7 @@ function WorkerSignUp(
         toast.error("Invalid Invitation")
       })
       .finally(() => {
-        resolver.updateResolver("validateInvitation")
+        resolver.end("validateInvitation")
       })
 
   }, [])
@@ -46,7 +46,7 @@ function WorkerSignUp(
   // sending data from server & wait for response 
   const submitData = () => {
 
-    resolver.createResolver("signUp", true)
+    resolver.create("signUp")
 
     signUp(collectedData)
       .then((res: any) => {
@@ -66,7 +66,7 @@ function WorkerSignUp(
 
       })
       .finally(() => {
-        resolver.updateResolver("signUp")
+        resolver.end("signUp")
       })
   }
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, InputText, Loader } from "@components/common"
-import { Plans } from "../_components/Plans"
+import { Plans } from "@components/AdminAuth/Plans"
 import { ArrowBigRight, HardHat } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
@@ -32,7 +32,7 @@ function AdminSignUp({ resolver }: { resolver: Resolver }) {
     //e: FormEvent<HTMLFormElement>
     //e.preventDefault();
 
-    resolver.createResolver("signUp", true)
+    resolver.create("signUp")
 
     signUp(collectedData)
       .then(async (res: any) => {
@@ -52,7 +52,7 @@ function AdminSignUp({ resolver }: { resolver: Resolver }) {
 
       })
       .finally(() => {
-        resolver.updateResolver("signIn")
+        resolver.end("signIn")
       })
 
   }

@@ -1,7 +1,6 @@
 'use client'
 import ProductNav from './ProductNav'
 import SolutionNav from './SolutionNav'
-import OpenSourceNav from './OpenSourceNav'
 import { useState } from 'react'
 import { Logo } from '../common'
 

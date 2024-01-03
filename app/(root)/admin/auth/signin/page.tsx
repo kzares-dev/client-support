@@ -26,7 +26,7 @@ function AdminSignIn({ resolver }: { resolver: Resolver }) {
   // sending data from server & waiting for response 
   const submitData = () => {
 
-    resolver.createResolver("signIn", true);
+    resolver.create("signIn");
     signIn(collectedData)
       .then((res: any) => {
         // saving auth jwt on cookies
@@ -45,7 +45,7 @@ function AdminSignIn({ resolver }: { resolver: Resolver }) {
 
       })
       .finally(() => {
-        resolver.updateResolver("signIn")
+        resolver.end("signIn")
       })
 
   }

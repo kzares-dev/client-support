@@ -19,11 +19,11 @@
       }
     ],
     "paths": {
-      "@components/*": ["./app/_components/*"],
-      "@server/*": ["./app/_api/*"],
-      "@hoc/*": ["./app/_hoc/*"],
-      "@context/*": ["./app/_context/*"],
-      "@hooks/*": ["./app/_hooks/*"],
+      "@components/*": ["./app/_src/components/*"],
+      "@server/*": ["./app/_src/api/*"],
+      "@hoc/*": ["./app/_src/hoc/*"],
+      "@context/*": ["./app/_src/context/*"],
+      "@hooks/*": ["./app/_src/hooks/*"],
       "@/*": ["./*"],
 
     }

@@ -1,11 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
-import ChatContainer from "../_components/ChatContainer";
 import withResolver, { Resolver } from "@hoc/resolver.hoc";
 import { Message, getChatMessages } from "@server/worker.api";
 import { toast } from "react-toastify";
-import MessageCard from "../_components/Message";
-import MessageShrimmerContainer from "../_components/MessageShrimmerContainer";
+import MessageCard from "@components/WorkerChats/Message";
+import MessageShrimmerContainer from "@components/WorkerChats/MessageShrimmerContainer";
 
 function ChatBox({ params, resolver }
   : { params: { id: string }, resolver: Resolver }) {

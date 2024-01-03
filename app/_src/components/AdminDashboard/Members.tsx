@@ -22,7 +22,7 @@ function Members({ resolver }: { resolver: Resolver }) {
 
   useEffect(() => {
     // Calling the server to retrieve the workers link to the organization
-    resolver.createResolver("members", true)
+    resolver.create("members")
 
     getCompanyMembers("") // TODO: Is needed to store the session data 
       .then((res: any) => {
@@ -32,11 +32,11 @@ function Members({ resolver }: { resolver: Resolver }) {
 
       })
       .finally(() => {
-        resolver.updateResolver("members", false)
+        resolver.end("members")
       })
 
     // Calling the server to retrieve the invite links for the creation of new accounts
-    resolver.createResolver("inviteLinks", true)
+    resolver.create("inviteLinks")
 
     getInviteLinks("") // TODO: Is needed to store the session data 
       .then((res: any) => {
@@ -46,7 +46,7 @@ function Members({ resolver }: { resolver: Resolver }) {
 
       })
       .finally(() => {
-        resolver.updateResolver("inviteLinks", false)
+        resolver.end("inviteLinks")
       })
 
 
@@ -64,7 +64,7 @@ function Members({ resolver }: { resolver: Resolver }) {
 
   // This function is to request a new user invitation
   const requestInvitation = () => {
-    resolver.createResolver("requestInvitation", true);
+    resolver.create("requestInvitation");
 
     generateInviteLink("")
       .then((res: any) => {
@@ -74,7 +74,7 @@ function Members({ resolver }: { resolver: Resolver }) {
       .catch(() => {
         toast.error("Failed to create invite link")
       })
-      .finally(() => resolver.updateResolver("requestInvitation", false))
+      .finally(() => resolver.end("requestInvitation"))
 
   }
 
@@ -91,7 +91,7 @@ function Members({ resolver }: { resolver: Resolver }) {
   }
 
   const deleteWorker = (workerId: string) => {
-    resolver.createResolver(workerId, true);
+    resolver.create(workerId);
 
     deleteWorkers("companyId", "workerId")
       .then((res: any) => {
@@ -102,7 +102,7 @@ function Members({ resolver }: { resolver: Resolver }) {
         toast.error("Failed to delete worker")
       })
       .finally(() => {
-        resolver.updateResolver(`deleteWorker${workerId}`, false)
+        resolver.end(workerId)
       })
 
 

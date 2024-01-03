@@ -1,13 +1,12 @@
 "use client";
 import { Layers } from "lucide-react"
-import ChatCard from "./_components/ChatCard"
-import ChatInput from "./_components/ChatInput"
-import ChatContainer from "./_components/ChatContainer"
+import ChatCard from "@components/WorkerChats/ChatCard"
+import ChatInput from "@components/WorkerChats/ChatInput"
 import { useEffect, useState } from "react"
 import { Chat, getActiveChats } from "@server/worker.api"
 import withResolver, { Resolver } from "@hoc/resolver.hoc"
 import { toast } from "react-toastify";
-import ChatCardShrimmer from "./_components/ChatCard.shrimmer";
+import ChatCardShrimmer from "@components/WorkerChats/ChatCard.shrimmer";
 
 function Chats({ resolver, children }: { resolver: Resolver, children: React.ReactNode }) {
 

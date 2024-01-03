@@ -1,6 +1,6 @@
-import Analytics from "./_components/Analytics"
-import Members from "./_components/Members"
-import Usage from "./_components/Usage"
+import Analytics from "@components/AdminDashboard/Analytics"
+import Members from "@components/AdminDashboard/Members"
+import Usage from "@components/AdminDashboard/Usage"
 
 
 function Overview() {

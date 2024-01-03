@@ -1,7 +1,7 @@
 import { ToastContainer } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
-import Navbar from "@components/Navbar/Navbar"
 import "./globals.css"
+import Navbar from "@components/Navbar/Navbar";
 
 export const metadata = {
   title: 'Customer Suport',
