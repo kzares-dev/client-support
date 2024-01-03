@@ -1,9 +1,24 @@
 import {
     User,
-    Trash
+    Trash,
+    Loader
 } from "lucide-react"
 
-function MemberCard() {
+function MemberCard({
+    deleteWorker,
+    id,
+    email,
+    name,
+    resolver,
+}: {
+    deleteWorker: (workerId: string) => void,
+    id: string,
+    email: string,
+    name: string,
+    resolver: boolean,
+}) {
+
+
     return (
         <div className="flex flex-row  items-center justify-between border-b pb-2 border-gray-100 ">
 
@@ -11,16 +26,16 @@ function MemberCard() {
                 <User strokeWidth={1} size={30} color="gray" />
 
                 <div className="flex flex-col">
-                    <p className="text-lg text-gray-800">John Deo</p>
-                    <p className="text-gray-400" >example@email.com</p>
+                    <p className="text-lg text-gray-800">{name}</p>
+                    <p className="text-gray-400" > {email} </p>
                 </div>
 
             </div>
 
 
-            <div className="cursor-pointer">
+            {resolver ? <Loader className="animate-spin" /> : <div className="cursor-pointer" onClick={() => deleteWorker(id)} >
                 <Trash size={20} color="gray" />
-            </div>
+            </div>}
         </div>
     )
 }

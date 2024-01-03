@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { ArrowBigRight, HardHat } from 'lucide-react'
 import Link from 'next/link'
 import { Button, InputText, Loader } from '@components/common'
-import { Admin, signIn } from "@server/admin.api"
+import { signIn } from "@server/admin.api"
 import { toast } from 'react-toastify'
 import Cookies from "js-cookie"
 import { useRouter } from 'next/navigation'

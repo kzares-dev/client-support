@@ -22,7 +22,7 @@ const _members = [
     },
 ]
 
-const _inviteLinks= [
+const _inviteLinks = [
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
 ]
@@ -41,6 +41,27 @@ export async function getInviteLinks(companyId: string) {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             resolve(_inviteLinks);
+        }, 2000);
+    });
+}
+
+export async function generateInviteLink(companyId: string) {
+
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve([
+                ..._inviteLinks,
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+            ]);
+        }, 2000);
+    });
+}
+
+export async function deleteWorkers(companyId: string, workerId: string) {
+
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve([_members[0], _members[1]]);
         }, 2000);
     });
 }

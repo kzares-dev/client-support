@@ -19,10 +19,12 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"],
       "@components/*": ["./app/_components/*"],
       "@server/*": ["./app/_api/*"],
       "@hoc/*": ["./app/_hoc/*"],
+      "@context/*": ["./app/_context/*"],
+      "@hooks/*": ["./app/_hooks/*"],
+      "@/*": ["./*"],
 
     }
   },

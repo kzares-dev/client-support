@@ -1,6 +1,6 @@
 import React from "react"
 
-function Button({ text, fill, Icon }: any) {
+function Button({ text, fill=false , Icon }: { text: string, fill?: boolean, Icon?: React.ReactNode } ) {
 
     // TODO: set up de default onClick
     return (
