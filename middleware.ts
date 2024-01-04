@@ -1,12 +1,10 @@
 import { NextResponse, NextRequest } from 'next/server'
 import { jwtVerify } from 'jose'
 
-export async function middleware(request: NextRequest,) {
-    console.log(request.url)
-
+export async function middleware(request: NextRequest, response: NextResponse) {
     // Check if the client is in a  auth route 
     // this action prevent the infinite loop of redirections
-    if(request.url.includes("/auth") ){
+    if (request.url.includes("/auth")) {
         return NextResponse.next();
     }
 
@@ -32,8 +30,7 @@ export async function middleware(request: NextRequest,) {
 
         return NextResponse.redirect(new URL('/admin/auth/signin', request.url))
     }
-    
-    
+
     if (request.nextUrl.pathname.startsWith("/worker")) {
         // Now check if user is not loged in as an admin but is loged as a worker
 
@@ -57,6 +54,28 @@ export async function middleware(request: NextRequest,) {
 
     }
 
+    // Now check if user is logged as a regular client
+    if (request.nextUrl.pathname.startsWith("/client")) {
+
+        const clientToken = request.cookies.get("clientToken")
+        if (clientToken?.value) {
+
+            // if the token exists and is valid, retake path, else redirect to login page
+            try {
+                await jwtVerify(clientToken.value, new TextEncoder().encode("CLIENT_JWT_DECODER"))
+
+                // returning path
+                return NextResponse.next();
+            } catch {
+                return NextResponse.rewrite(new URL('/client/auth', request.url))
+            }
+        }
+
+        return NextResponse.rewrite(new URL('/client/auth', request.url))
+
+
+    }
+
 
 
 
@@ -64,5 +83,5 @@ export async function middleware(request: NextRequest,) {
 
 // Filter routes that allow middleware
 export const config = {
-    matcher: ['/admin/:path*', '/worker/:path*'],
+    matcher: ['/admin/:path*', '/worker/:path*', '/client/:path*'],
 }

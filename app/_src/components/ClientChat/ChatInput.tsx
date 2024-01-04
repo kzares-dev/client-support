@@ -9,7 +9,7 @@ function ChatInput() {
                 <input
                     type="text"
                     placeholder="type your message..."
-                    className="flex-1 bg-white shadow py-4 px-4 overflow-auto scrollbar-hide"
+                    className="flex-1 bg-gray-50 py-4 px-4 overflow-auto scrollbar-hide"
                 />
 
                 <div className="w-[50px] flex items-center justify-center border-l cursor-pointer">
