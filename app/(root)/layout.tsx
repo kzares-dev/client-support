@@ -1,6 +1,4 @@
-"use client";
-import { Confirmation } from "@components/common";
-import { RecoilRoot } from "recoil"
+import Header from "@/components/shared/Header"
 
 export default function RootLayout({
     children,
@@ -8,9 +6,9 @@ export default function RootLayout({
     children: React.ReactNode
 }) {
     return (
-        <RecoilRoot>
-            <Confirmation />
-            {children}
-        </RecoilRoot>
+        <div className="flex h-screen flex-col">
+            <Header />
+            <main className="flex-1 container">{children}</main>
+        </div>
     )
 }

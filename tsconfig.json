@@ -19,15 +19,9 @@
       }
     ],
     "paths": {
-      "@components/*": ["./app/_src/components/*"],
-      "@server/*": ["./app/_src/api/*"],
-      "@hoc/*": ["./app/_src/hoc/*"],
-      "@context/*": ["./app/_src/context/*"],
-      "@hooks/*": ["./app/_src/hooks/*"],
-      "@/*": ["./*"],
-
+      "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "components/Overview/Analytics", "components/Overview/Usage"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
 }
