@@ -28,6 +28,12 @@ export const signUpInitialValues = {
    },
 }
 
+export const signInInitialValues = {
+   email: "",
+   password: "",
+   isAdmin: false,
+}
+
 export const plans = {
   free: {
     title: "Free",

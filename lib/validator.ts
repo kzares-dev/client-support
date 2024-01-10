@@ -28,3 +28,11 @@ export const signUpFormSchema = z.object({
 
 
 })
+
+export const signInFormSchema = z.object({
+    email: z.string().email(),
+    password: z.string().min(3, {
+        message: "Last name must be at least 3 characters"
+    }),
+    isAdmin: z.boolean().default(false)
+})
